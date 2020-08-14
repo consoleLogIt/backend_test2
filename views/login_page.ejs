@@ -35,13 +35,23 @@
 </div>
 <a href=""> Forgot password</a>
 
+
 <div class="ui buttons">
-  <input id = "log-in" class="ui positive button" type="submit">LogIn</input>
+  <input id = "log-in" class="ui positive button" value="LogIn" type="submit"></input>
 </form>
   <div class="or"></div>
 
   <input id ="sign-up" type ="button" value="SignUp" class="ui button"></button>
+
+  
 </div>
+<br>
+<button class="ui google plus button">
+  <i class="google plus icon"></i>
+<a href="/users/auth/google">login with G+</a>
+  
+</button>
+
 
 
    
@@ -50,13 +60,8 @@
 <div class="ui modal">
   <div class="header">Registration</div>
    <div class="content">
-       <form action="/create" method="POST">
-   	<div class="ui labeled input">
-  <div class="ui label">
-     name
-  </div>
-  <input type="text" name="name" placeholder="SocioFy" required>
-</div>
+       <form action="/create-user" method="POST">
+  
 <div class="ui labeled input">
   <div class="ui label">
     email
@@ -69,8 +74,16 @@
         </div>
         <input type="password" name="password" placeholder="SocioFy" required>
       </div>
+      <div class="ui labeled input">
+        <div class="ui label">
+           confirm
+        </div>
+        <input type="password" name="confirm" placeholder="SocioFy" required>
+      </div>
       <button class="ui primary button" type="submit">Submit</button>
       </form>
+
+      
   </div>
 </div>
 
@@ -87,7 +100,30 @@
 <script  src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.js"></script>
 <script type="text/javascript" src="/js/login_page.js"></script>
 
+<script>
 
+  <%if(flash.success && flash.success.length>0){%>
+  new Noty({
+      theme:'relax',
+      text:  '<%=flash.success%>',
+      type:'success',
+      layout:'topRight',
+      timeout: 1500
+  }).show();
+
+ <%}%>
+
+ <%if(flash.error && flash.error.length>0){%>
+  new Noty({
+      theme:'relax',
+      text:  '<%=flash.error%>',
+      type:'error',
+      layout:'topRight',
+      timeout: 1500
+  }).show();
+
+ <%}%>
+ </script>
   
 
   
