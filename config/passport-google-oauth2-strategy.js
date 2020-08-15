@@ -24,7 +24,6 @@ function(accessToken, refreshToken,profile,done){
             User.create({
                 email:profile.emails[0].value,
                 password:pass,
-                confirm:pass
             }, function(err,user){
                 if(err){
                     console.log('error in creating user google strategy-passport',err)

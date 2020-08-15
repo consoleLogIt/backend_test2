@@ -9,11 +9,8 @@ const userSchema  = new mongoose.Schema({
     password:{
         type:String,
         required:true
-    },
-    confirm:{
-        type:String,
-        required:true
-    },
+    }
+    
 },
     
 {

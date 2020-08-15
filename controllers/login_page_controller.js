@@ -1,4 +1,6 @@
 const User = require('../models/user');
+const crypto = require('crypto');
+
 module.exports.login_page = function(req,res){
    
     if(req.isAuthenticated()){
@@ -13,21 +15,23 @@ module.exports.create_user = async function(req,res){
     try{
         if(req.body.password!=req.body.confirm){
             req.flash('error','password did not matched');
+
+            return res.redirect('back');
         }
 
        let user = await User.findOne({email: req.body.email})
 
             if(!user){
-                User.create(req.body, function(err,user){
-            return res.redirect('back');
+                let encrypted_password = crypto.createCipher("aes-256-ctr","thisisthekey").update(req.body.password,"utf-8","hex")
+                User.create({email:req.body.email,password:encrypted_password})
+                req.flash('success','you can logIn now');
               
-                })
             }
             else{
                 req.flash('error','user already exists');
-            return res.redirect('back');
 
             }    
+            return res.redirect('back');
                 
 
     }

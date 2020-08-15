@@ -1,23 +1,25 @@
 const passport  = require('passport');
+const crypto = require('crypto');
 
 const LocalStrategy = require('passport-local').Strategy;
 
 const User = require('../models/user');
 
 
-passport.use(new LocalStrategy({
+ passport.use(new LocalStrategy({
 
     usernameField:"email",
     passReqToCallback:true
 },
-function(req,email,password,done){
+ function(req,email,password,done){
     User.findOne({email:email},function(err,user){
         if(err){
             req.flash('error',err);
             return done(err);
         }
-        if(!user || user.password!=password){
-            req.flash('error' ,'Invalid Username/Password');
+        let decrypted_password = crypto.createDecipher("aes-256-ctr","thisisthekey").update(user.password,"hex","utf-8");
+        if(!user || decrypted_password!=password){
+            req.flash('error' ,'Invalid Password');
             return done(null,false);
         }
 
