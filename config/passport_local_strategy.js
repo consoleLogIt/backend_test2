@@ -17,6 +17,7 @@ const User = require('../models/user');
             req.flash('error',err);
             return done(err);
         }
+        //decrypt the password present in db
         let decrypted_password = crypto.createDecipher("aes-256-ctr","thisisthekey").update(user.password,"hex","utf-8");
         if(!user || decrypted_password!=password){
             req.flash('error' ,'Invalid Password');
@@ -28,10 +29,12 @@ const User = require('../models/user');
 }
 ));
 
+//to put the user.id into session cookie
 passport.serializeUser(function(user,done){
     done(null,user.id);
 })
 
+// to find th user if the session was not destroyed
 passport.deserializeUser(function(id,done){
     User.findById(id,function(err,user){
         if(err){
@@ -51,6 +54,7 @@ passport.checkAuthentication = function(req,res,next){
     // if not authenticated
     return   res.redirect('/');
 }
+// set user to locals
     passport.setAuthenticatedUser = function(req,res,next){
         if(req.isAuthenticated()){
             res.locals.user = req.user;

@@ -3,7 +3,7 @@ const passport  = require('passport');
 const login_page_controller  = require('../controllers/login_page_controller');
 const router = express.Router();
 
-
+//login page route
 router.get('/',login_page_controller.login_page);
 
 router.post('/create-user', login_page_controller.create_user);
