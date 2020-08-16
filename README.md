@@ -18,3 +18,8 @@ This directory contains the DB file
 This directory contains the files to route actions to thier appropriate controllers
 ### views 
 This directory contains the view files
+
+# How to setup locally
+### step 1 - clone to local repository.
+### step 2 - do npm init.
+### step 3 - do npm start to run the server.
